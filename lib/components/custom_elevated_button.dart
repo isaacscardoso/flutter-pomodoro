@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
-  final Function() customOnPressed;
-  final EdgeInsetsGeometry customPadding;
-  final IconData customChildIcon;
-  final OutlinedBorder? customShape;
-  final Color? customPrimary;
-  final Color? customChildIconColor;
+  final Function() onPressed;
+  final EdgeInsetsGeometry padding;
+  final IconData icon;
+  final OutlinedBorder? shape;
+  final Color? primaryColor;
+  final Color? iconColor;
 
   const CustomElevatedButton({
     Key? key,
-    required this.customOnPressed,
-    required this.customPadding,
-    required this.customChildIcon,
-    this.customShape,
-    this.customPrimary,
-    this.customChildIconColor,
+    required this.onPressed,
+    required this.padding,
+    required this.icon,
+    this.shape,
+    this.primaryColor,
+    this.iconColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: customOnPressed,
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: customPadding,
-        shape: customShape ?? const CircleBorder(),
-        primary: customPrimary ?? Colors.purpleAccent,
+        padding: padding,
+        shape: shape ?? const CircleBorder(),
+        primary: primaryColor ?? Colors.purpleAccent,
       ),
       child: Icon(
-        customChildIcon,
-        color: customChildIconColor ?? Colors.white,
+        icon,
+        color: iconColor ?? Colors.white,
       ),
     );
   }
