@@ -19,8 +19,8 @@ class Pomodoro extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const <Widget>[
-                TimeInput(title: 'Study Flutter', timeAmount: 25),
-                TimeInput(title: 'Coffe Break', timeAmount: 6),
+                TimeInput(title: 'Estudar', timeAmount: 25),
+                TimeInput(title: 'Descansar', timeAmount: 6),
               ],
             ),
           ),
