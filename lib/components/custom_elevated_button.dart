@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final Function() onPressed;
-  final EdgeInsetsGeometry padding;
-  final IconData icon;
+  final IconData? icon;
+  final EdgeInsetsGeometry? padding;
   final OutlinedBorder? shape;
   final Color? primaryColor;
+  final Widget? child;
   final Color? iconColor;
 
   const CustomElevatedButton({
     Key? key,
     required this.onPressed,
-    required this.padding,
-    required this.icon,
+    this.icon,
+    this.padding,
     this.shape,
     this.primaryColor,
+    this.child,
     this.iconColor,
   }) : super(key: key);
 
@@ -25,12 +27,10 @@ class CustomElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: padding,
         shape: shape ?? const CircleBorder(),
-        primary: primaryColor ?? Colors.purpleAccent,
+        primary: primaryColor ?? Colors.red,
       ),
-      child: Icon(
-        icon,
-        color: iconColor ?? Colors.white,
-      ),
+      child: child ??
+          (icon != null ? Icon(icon, color: iconColor ?? Colors.white) : null),
     );
   }
 }
