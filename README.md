@@ -4,6 +4,6 @@
 
 <div align="center">
 
-  ![pomodoro_resting_time](https://user-images.githubusercontent.com/88048363/182955229-f558137d-f4c7-40bf-acb3-54100d6f273b.png)
-  ![pomodoro_working_time](https://user-images.githubusercontent.com/88048363/182955225-5d117c42-706e-4745-a364-9a1fd56d9d46.png)
+  ![pomodoro_resting_time](https://user-images.githubusercontent.com/88048363/182956401-bda88e68-34c6-4801-9a26-b074ce7e052f.png)
+  ![pomodoro_working_time](https://user-images.githubusercontent.com/88048363/182956404-169cf056-908a-4c7e-8038-720f0a124100.png)
 </div>
