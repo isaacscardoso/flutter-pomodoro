@@ -12,39 +12,41 @@ class Stopwatch extends StatelessWidget {
   Widget build(BuildContext context) {
     final PomodoroStore pomodoroStore = Provider.of<PomodoroStore>(context);
 
-    return Container(
-      color: Colors.red,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const CustomText(
-            content: 'Hora de Estudar',
-            fontSize: 45,
-            textColor: Colors.white,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: CustomText(
-              content:
-                  '${pomodoroStore.minutes.toString().padLeft(2, '0')}:${pomodoroStore.seconds.toString().padLeft(2, '0')}',
-              fontSize: 120,
+    return Observer(
+      builder: (_) => Container(
+        color: pomodoroStore.isWorkingTime ? Colors.red : Colors.green,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CustomText(
+              content: pomodoroStore.isWorkingTime
+                  ? 'Hora de Estudar'
+                  : 'Descansando',
+              fontSize: 45,
               textColor: Colors.white,
             ),
-          ),
-          Observer(
-            builder: (_) => Row(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: CustomText(
+                content:
+                    '${pomodoroStore.minutes.padLeft(2, '0')}:${pomodoroStore.seconds.padLeft(2, '0')}',
+                fontSize: 120,
+                textColor: Colors.white,
+              ),
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 !pomodoroStore.started
                     ? StopwatchButton(
                         content: 'Iniciar',
-                        onPressed: pomodoroStore.toggleStarted,
+                        onPressed: pomodoroStore.start,
                         icon: Icons.play_arrow,
                       )
                     : StopwatchButton(
                         content: 'Parar',
-                        onPressed: pomodoroStore.toggleStarted,
+                        onPressed: pomodoroStore.stop,
                         icon: Icons.stop,
                       ),
                 const SizedBox(
@@ -57,8 +59,8 @@ class Stopwatch extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
