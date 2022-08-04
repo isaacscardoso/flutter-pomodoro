@@ -1,16 +1,11 @@
-# pomodoro_app
+<h1 align="center">P O M O D O R O</h1>
 
-A new Flutter project.
+<p>The famous watch of the Pomodoro technique. This project aims to understand state management using MobX and using the Provider as a dependency manager.<p>
 
-## Getting Started
+<div align="center">
 
-This project is a starting point for a Flutter application.
+  ![pomodoro_resting_time](https://user-images.githubusercontent.com/88048363/182955229-f558137d-f4c7-40bf-acb3-54100d6f273b.png)
+  <>
+  ![pomodoro_working_time](https://user-images.githubusercontent.com/88048363/182955225-5d117c42-706e-4745-a364-9a1fd56d9d46.png)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+</div>
