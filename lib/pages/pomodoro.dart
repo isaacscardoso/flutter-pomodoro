@@ -3,6 +3,7 @@ import 'package:pomodoro_app/components/stopwatch.dart';
 import 'package:pomodoro_app/components/time_input.dart';
 import 'package:pomodoro_app/store/pomodoro.store.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class Pomodoro extends StatelessWidget {
   const Pomodoro({Key? key}) : super(key: key);
@@ -20,18 +21,24 @@ class Pomodoro extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                TimeInput(
-                  title: 'Estudar',
-                  timeAmount: pomodoroStore.workingTime,
-                ),
-                TimeInput(
-                  title: 'Descansar',
-                  timeAmount: pomodoroStore.restTime,
-                ),
-              ],
+            child: Observer(
+              builder: (_) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  TimeInput(
+                    title: 'Estudar',
+                    timeAmount: pomodoroStore.workingTime,
+                    increment: pomodoroStore.incrementWorkingTime,
+                    decrement: pomodoroStore.decrementWorkingTime,
+                  ),
+                  TimeInput(
+                    title: 'Descansar',
+                    timeAmount: pomodoroStore.restTime,
+                    increment: pomodoroStore.incrementRestTime,
+                    decrement: pomodoroStore.decrementRestTime,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
