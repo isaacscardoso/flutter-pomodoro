@@ -27,7 +27,7 @@ class CustomElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: padding,
         shape: shape ?? const CircleBorder(),
-        primary: primaryColor ?? Colors.red,
+        primary: primaryColor,
       ),
       child: child ??
           (icon != null ? Icon(icon, color: iconColor ?? Colors.white) : null),
