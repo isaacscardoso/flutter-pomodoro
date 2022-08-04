@@ -4,31 +4,27 @@ part 'pomodoro.store.g.dart';
 
 class PomodoroStore = PomodoroStoreBase with _$PomodoroStore;
 
+enum CurrentState { working, resting }
+
 abstract class PomodoroStoreBase with Store {
+  // Current State
   @observable
-  bool _started = false;
+  CurrentState currentState = CurrentState.resting;
 
   @computed
-  bool get started => _started;
-
-  @observable
-  int _minutes = 25;
+  bool get isWorkingTime => currentState == CurrentState.working;
 
   @computed
-  int get minutes => _minutes;
+  bool get isRestingTime => currentState == CurrentState.resting;
 
-  @observable
-  int _seconds = 0;
+  @action
+  void nowWorking() => currentState = CurrentState.working;
 
-  @computed
-  int get seconds => _seconds;
+  @action
+  void nowResting() => currentState = CurrentState.resting;
+  //
 
-  @observable
-  int _workingTime = 2;
-
-  @computed
-  int get workingTime => _workingTime;
-
+  // Rest Time
   @observable
   int _restTime = 1;
 
@@ -36,20 +32,66 @@ abstract class PomodoroStoreBase with Store {
   int get restTime => _restTime;
 
   @action
-  void toggleStarted() => _started = !_started;
+  void incrementRestTime() => _restTime++;
 
   @action
-  void reset() => _started = false;
+  void decrementRestTime() => _restTime--;
+  //
+
+  // Working Time
+  @observable
+  int _workingTime = 2;
+
+  @computed
+  int get workingTime => _workingTime;
 
   @action
   void incrementWorkingTime() => _workingTime++;
 
   @action
   void decrementWorkingTime() => _workingTime--;
+  //
+
+  // Minutes
+  @observable
+  int _minutes = 0;
+
+  @computed
+  String get minutes => _minutes.toString();
+  //
+
+  // Seconds
+  @observable
+  int _seconds = 0;
+
+  @computed
+  String get seconds => _seconds.toString();
+  //
+
+  // Clock Functions
+  @observable
+  bool _started = false;
+
+  @computed
+  bool get started => _started;
 
   @action
-  void incrementRestTime() => _restTime++;
+  void start() {
+    _started = true;
+    nowWorking();
+  }
 
   @action
-  void decrementRestTime() => _restTime--;
+  void stop() {
+    _started = false;
+    nowResting();
+  }
+
+  @action
+  void reset() {
+    _minutes = 25;
+    _seconds = 0;
+    stop();
+  }
+  //
 }
