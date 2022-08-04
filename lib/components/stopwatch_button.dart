@@ -21,7 +21,10 @@ class StopwatchButton extends CustomElevatedButton {
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       child: Row(
         children: <Widget>[
-          Icon(icon, size: 28),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(icon, size: 28),
+          ),
           CustomText(content: content, fontSize: 20)
         ],
       ),
