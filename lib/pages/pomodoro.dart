@@ -21,24 +21,26 @@ class Pomodoro extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
-            child: Observer(
-              builder: (_) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  TimeInput(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Observer(
+                  builder: (_) => TimeInput(
                     title: 'Estudar',
                     timeAmount: pomodoroStore.workingTime,
                     increment: pomodoroStore.incrementWorkingTime,
                     decrement: pomodoroStore.decrementWorkingTime,
                   ),
-                  TimeInput(
+                ),
+                Observer(
+                  builder: (_) => TimeInput(
                     title: 'Descansar',
                     timeAmount: pomodoroStore.restTime,
                     increment: pomodoroStore.incrementRestTime,
                     decrement: pomodoroStore.decrementRestTime,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
