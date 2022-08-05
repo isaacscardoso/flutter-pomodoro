@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 class TimeInput extends StatelessWidget {
   final String title;
   final int timeAmount;
-  final void Function() increment;
-  final void Function() decrement;
+  final void Function()? increment;
+  final void Function()? decrement;
 
   const TimeInput({
     Key? key,
