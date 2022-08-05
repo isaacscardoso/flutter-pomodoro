@@ -4,4 +4,3 @@ targets:
       mobx_codegen|mobx_generator:
         generate_for:
           - "lib/store/**.store.dart"
-          - "lib/store/**.controller.dart"
