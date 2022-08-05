@@ -8,8 +8,8 @@ class StopwatchButton extends CustomElevatedButton {
   const StopwatchButton({
     Key? key,
     required this.content,
-    required super.onPressed,
-    required super.icon,
+    super.icon,
+    super.onPressed,
   }) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class StopwatchButton extends CustomElevatedButton {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(icon, size: 28),
+            child: icon != null ? Icon(icon, size: 28) : null,
           ),
           CustomText(content: content, fontSize: 20)
         ],
