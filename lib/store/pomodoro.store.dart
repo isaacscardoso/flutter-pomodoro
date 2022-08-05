@@ -15,26 +15,15 @@ abstract class PomodoroStoreBase with Store {
   Timer? _stopwatch;
 
   @observable
-  int _workingTime = 25;
+  int workingTime = 25;
   @observable
-  int _restingTime = 5;
+  int restingTime = 5;
   @observable
-  bool _started = false;
+  bool started = false;
   @observable
-  int _secondsRemaining = 0;
+  int secondsRemaining = 0;
   @observable
-  late int _minutesRemaining = workingTime;
-
-  @computed
-  int get workingTime => _workingTime;
-  @computed
-  int get restingTime => _restingTime;
-  @computed
-  int get minutesRemaining => _minutesRemaining;
-  @computed
-  int get secondsRemaining => _secondsRemaining;
-  @computed
-  bool get started => _started;
+  late int minutesRemaining = workingTime;
 
   @computed
   bool get isWorkingTime => currentState == CurrentState.working;
@@ -47,55 +36,58 @@ abstract class PomodoroStoreBase with Store {
   void nowResting() => currentState = CurrentState.resting;
 
   @action
-  void _incrementMinutesRemaining() => _minutesRemaining++;
+  void _decMinRem() => minutesRemaining--;
   @action
-  void _decrementMinutesRemaining() => _minutesRemaining--;
+  void _decSecRem() => secondsRemaining--;
 
   @action
-  void _incrementSecondsRemaining() => _secondsRemaining++;
+  void incWorkingTime() => workingTime++;
   @action
-  void _decrementSecondsRemaining() => _secondsRemaining--;
+  void incRestingTime() => restingTime++;
 
   @action
-  void incrementWorkingTime() => _workingTime++;
-
-  @action
-  void decrementWorkingTime() {
-    if (_workingTime > 1) _workingTime--;
+  void decWorkingTime() {
+    if (workingTime > 1) workingTime--;
   }
 
   @action
-  void incrementRestingTime() => _restingTime++;
-
-  @action
-  void decrementRestingTime() {
-    if (_restingTime > 1) _restingTime--;
+  void decRestingTime() {
+    if (restingTime > 1) restingTime--;
   }
+
+  @computed
+  bool get incWorkIsValid => started && isWorkingTime;
+  @computed
+  bool get decWorkIsValid => (started && isWorkingTime) || (workingTime <= 1);
+  @computed
+  bool get incRestIsValid => started && isRestingTime;
+  @computed
+  bool get decRestIsValid => (started && isRestingTime) || (restingTime <= 1);
 
   @action
   void _toggleTimeRemaining() {
     if (isWorkingTime) {
-      _minutesRemaining = restingTime;
+      minutesRemaining = restingTime;
       nowResting();
     } else {
-      _minutesRemaining = workingTime;
+      minutesRemaining = workingTime;
       nowWorking();
     }
   }
 
   @action
   void start() {
-    _started = true;
+    started = true;
     _stopwatch = Timer.periodic(
       const Duration(milliseconds: 50),
       (timer) {
         if (minutesRemaining == 0 && secondsRemaining == 0) {
           _toggleTimeRemaining();
         } else if (secondsRemaining == 0) {
-          _secondsRemaining = 59;
-          _decrementMinutesRemaining();
+          secondsRemaining = 59;
+          _decMinRem();
         } else {
-          _decrementSecondsRemaining();
+          _decSecRem();
         }
       },
     );
@@ -103,14 +95,14 @@ abstract class PomodoroStoreBase with Store {
 
   @action
   void stop() {
-    _started = false;
+    started = false;
     _stopwatch?.cancel();
   }
 
   @action
   void reset() {
-    _secondsRemaining = 0;
-    _minutesRemaining = isWorkingTime ? _workingTime : _restingTime;
+    secondsRemaining = 0;
+    minutesRemaining = isWorkingTime ? workingTime : restingTime;
     stop();
   }
 }
