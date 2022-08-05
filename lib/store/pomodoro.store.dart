@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 
 part 'pomodoro.store.g.dart';
@@ -8,7 +10,9 @@ enum CurrentState { working, resting }
 
 abstract class PomodoroStoreBase with Store {
   @observable
-  CurrentState currentState = CurrentState.resting;
+  CurrentState currentState = CurrentState.working;
+
+  Timer? _stopwatch;
 
   @observable
   int _workingTime = 25;
@@ -19,16 +23,16 @@ abstract class PomodoroStoreBase with Store {
   @observable
   int _secondsRemaining = 0;
   @observable
-  late int _minutesRemaining = restingTime;
+  late int _minutesRemaining = workingTime;
 
   @computed
   int get workingTime => _workingTime;
   @computed
   int get restingTime => _restingTime;
   @computed
-  String get minutesRemaining => _minutesRemaining.toString();
+  int get minutesRemaining => _minutesRemaining;
   @computed
-  String get secondsRemaining => _secondsRemaining.toString();
+  int get secondsRemaining => _secondsRemaining;
   @computed
   bool get started => _started;
 
@@ -43,40 +47,70 @@ abstract class PomodoroStoreBase with Store {
   void nowResting() => currentState = CurrentState.resting;
 
   @action
-  void incrementWorkingTime() => _workingTime++;
+  void _incrementMinutesRemaining() => _minutesRemaining++;
   @action
-  void decrementWorkingTime() => _workingTime--;
+  void _decrementMinutesRemaining() => _minutesRemaining--;
+
+  @action
+  void _incrementSecondsRemaining() => _secondsRemaining++;
+  @action
+  void _decrementSecondsRemaining() => _secondsRemaining--;
+
+  @action
+  void incrementWorkingTime() => _workingTime++;
+
+  @action
+  void decrementWorkingTime() {
+    if (_workingTime > 1) _workingTime--;
+  }
 
   @action
   void incrementRestingTime() => _restingTime++;
-  @action
-  void decrementRestingTime() => _restingTime--;
 
   @action
-  void toggleTimeRemaining() => isWorkingTime
-      ? _minutesRemaining = workingTime
-      : _minutesRemaining = restingTime;
+  void decrementRestingTime() {
+    if (_restingTime > 1) _restingTime--;
+  }
+
+  @action
+  void _toggleTimeRemaining() {
+    if (isWorkingTime) {
+      _minutesRemaining = restingTime;
+      nowResting();
+    } else {
+      _minutesRemaining = workingTime;
+      nowWorking();
+    }
+  }
 
   @action
   void start() {
     _started = true;
-    nowWorking();
-    toggleTimeRemaining();
+    _stopwatch = Timer.periodic(
+      const Duration(milliseconds: 50),
+      (timer) {
+        if (minutesRemaining == 0 && secondsRemaining == 0) {
+          _toggleTimeRemaining();
+        } else if (secondsRemaining == 0) {
+          _secondsRemaining = 59;
+          _decrementMinutesRemaining();
+        } else {
+          _decrementSecondsRemaining();
+        }
+      },
+    );
   }
 
   @action
   void stop() {
     _started = false;
-    nowResting();
-    toggleTimeRemaining();
+    _stopwatch?.cancel();
   }
 
   @action
   void reset() {
-    _workingTime = 25;
-    _restingTime = 5;
     _secondsRemaining = 0;
-    _minutesRemaining = restingTime;
+    _minutesRemaining = isWorkingTime ? _workingTime : _restingTime;
     stop();
   }
 }
