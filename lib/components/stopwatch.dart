@@ -30,7 +30,7 @@ class Stopwatch extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: CustomText(
                 content:
-                    '${pomodoroStore.minutes.padLeft(2, '0')}:${pomodoroStore.seconds.padLeft(2, '0')}',
+                    '${pomodoroStore.minutesRemaining.padLeft(2, '0')}:${pomodoroStore.secondsRemaining.padLeft(2, '0')}',
                 fontSize: 120,
                 textColor: Colors.white,
               ),

@@ -35,9 +35,9 @@ class Pomodoro extends StatelessWidget {
                 Observer(
                   builder: (_) => TimeInput(
                     title: 'Descansar',
-                    timeAmount: pomodoroStore.restTime,
-                    increment: pomodoroStore.incrementRestTime,
-                    decrement: pomodoroStore.decrementRestTime,
+                    timeAmount: pomodoroStore.restingTime,
+                    increment: pomodoroStore.incrementRestingTime,
+                    decrement: pomodoroStore.decrementRestingTime,
                   ),
                 ),
               ],
