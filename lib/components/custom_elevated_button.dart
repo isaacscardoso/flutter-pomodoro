@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
-  final Function() onPressed;
+  final Function()? onPressed;
   final IconData? icon;
   final EdgeInsetsGeometry? padding;
   final OutlinedBorder? shape;
@@ -11,7 +11,7 @@ class CustomElevatedButton extends StatelessWidget {
 
   const CustomElevatedButton({
     Key? key,
-    required this.onPressed,
+    this.onPressed,
     this.icon,
     this.padding,
     this.shape,
