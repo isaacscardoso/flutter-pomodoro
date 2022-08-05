@@ -10,7 +10,7 @@ class Pomodoro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PomodoroStore pomodoroStore = Provider.of<PomodoroStore>(context);
+    final PomodoroStore pStore = Provider.of<PomodoroStore>(context);
 
     return Scaffold(
       body: Column(
@@ -27,17 +27,21 @@ class Pomodoro extends StatelessWidget {
                 Observer(
                   builder: (_) => TimeInput(
                     title: 'Estudar',
-                    timeAmount: pomodoroStore.workingTime,
-                    increment: pomodoroStore.incrementWorkingTime,
-                    decrement: pomodoroStore.decrementWorkingTime,
+                    timeAmount: pStore.workingTime,
+                    increment:
+                        pStore.incWorkIsValid ? null : pStore.incWorkingTime,
+                    decrement:
+                        pStore.decWorkIsValid ? null : pStore.decWorkingTime,
                   ),
                 ),
                 Observer(
                   builder: (_) => TimeInput(
                     title: 'Descansar',
-                    timeAmount: pomodoroStore.restingTime,
-                    increment: pomodoroStore.incrementRestingTime,
-                    decrement: pomodoroStore.decrementRestingTime,
+                    timeAmount: pStore.restingTime,
+                    increment:
+                        pStore.incRestIsValid ? null : pStore.incRestingTime,
+                    decrement:
+                        pStore.decRestIsValid ? null : pStore.decRestingTime,
                   ),
                 ),
               ],
